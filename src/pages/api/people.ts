@@ -8,7 +8,8 @@ export const authenticated = (fn: NextApiHandler) => async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
-  const token = req.headers.authorization!;
+  // const token = req.headers.authorization!;
+  const token = req.cookies.authToken!;
   jwt.verify(token, secretKey, async function (err: any, decoded: any) {
     if (!err && decoded) {
       return await fn(req, res);

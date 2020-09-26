@@ -7,6 +7,8 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import { myGet } from "../../api/myGet";
+import { NextPageContext } from "next";
 
 // const useStyles = makeStyles({
 //   table: {
@@ -33,7 +35,7 @@ import Paper from "@material-ui/core/Paper";
 // ];
 
 interface VehiclesProp {
-  vehiclesList: Vehicle[] | undefined;
+  vehicles: Vehicle[] | undefined;
 }
 
 interface Vehicle {
@@ -43,8 +45,9 @@ interface Vehicle {
   ownerId: number | string;
 }
 
-export default function Vehicles({ vehiclesList }: VehiclesProp) {
+export default function Vehicles({ vehicles: vehiclesList }: VehiclesProp) {
   // const classes = useStyles();
+  // console.log("vehiclesList=", vehiclesList);
   return (
     <div>
       <p>Vehicles list</p>
@@ -77,9 +80,12 @@ export default function Vehicles({ vehiclesList }: VehiclesProp) {
   );
 }
 
-Vehicles.getInitialProps = async () => {
+Vehicles.getInitialProps = async (ctx: NextPageContext) => {
   //
-  const resp = await fetch("http://localhost:3000/api/vehicles");
-  const json = await resp.json();
-  return { vehiclesList: json };
+  // const resp = await fetch("http://localhost:3000/api/vehicles");
+  // const json = await resp.json();
+  // return { vehiclesList: json };
+  // console.log("ctx=", ctx);
+  const json = await myGet(`http://localhost:3000/api/vehicles`, ctx);
+  return { vehicles: json };
 };
